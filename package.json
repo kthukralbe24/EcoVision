@@ -1,0 +1,39 @@
+{
+  "name": "ecovision",
+  "version": "2.0.0",
+  "description": "Smart Campus Circular Plastic Economy & Student Life Sustainability Hub - PromptWars x OWASP",
+  "main": "js/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "test:watch": "node --test --watch test/*.test.mjs",
+    "security-audit": "node scripts/security-audit.mjs",
+    "lint": "node scripts/lint.mjs",
+    "start": "npx -y serve -p 3000 ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kavvz20/EcoVision.git"
+  },
+  "keywords": [
+    "smart-campus",
+    "student-life",
+    "plastic-recycling",
+    "circular-economy",
+    "owasp-security",
+    "ecovision",
+    "sustainability",
+    "wcag-accessibility",
+    "zero-waste"
+  ],
+  "author": "kavvz20",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kavvz20/EcoVision/issues"
+  },
+  "homepage": "https://github.com/kavvz20/EcoVision#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

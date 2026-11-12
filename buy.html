@@ -3,413 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plastic Wallah - Buy Plastic</title>
+    <meta name="theme-color" content="#1e5a22">
+    <link rel="manifest" href="manifest.webmanifest">
+    <!-- Strict Content Security Policy (OWASP A05) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; connect-src 'self'; object-src 'none'; base-uri 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="description" content="Browse verified recycled plastics across campus zones. Purchase sorted PET, HDPE, lab polypropylene, and makerspace 3D printing PLA filaments with student discounts.">
+    <title>EcoVision - Smart Campus Plastic Marketplace</title>
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/buy.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Navbar -->
-    <nav>
-        <a href="index.html">HOME</a>
-        <a href="BUY.html">BUY</a>
-        <a href="SELL.html">SELL</a>
-    </nav>
-
-    <!-- Buy Container -->
-    <div class="buy-container">
-        <h1 style="color: #18391e;">Available Plastic Waste</h1>
-        
-        <div class="filters">
-            <select id="plasticTypeFilter">
-                <option value="all">All Types</option>
-                <option value="PET">PET</option>
-                <option value="HDPE">HDPE</option>
-                <option value="PVC">PVC</option>
-                <option value="LDPE">LDPE</option>
-                <option value="PP">PP</option>
-                <option value="PS">PS</option>
-            </select>
-            
-            <select id="locationFilter">
-                <option value="all">All Locations</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Hyderabad">Hyderabad</option>
-            </select>
-            
-            <select id="sortFilter">
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="quantity-desc">Quantity: High to Low</option>
-            </select>
+    <!-- Navigation Header -->
+    <header class="site-nav" role="banner">
+        <div class="nav-container">
+            <a href="index.html" class="brand-wrapper" aria-label="EcoVision Home">
+                <img src="images/plas.png" alt="EcoVision Logo" class="brand-logo-img">
+                <div class="brand-title">
+                    EcoVision
+                    <span class="brand-subtitle">Smart Campus Sustainability</span>
+                </div>
+            </a>
+            <nav class="nav-links" role="navigation" aria-label="Main Navigation">
+                <a href="index.html">HOME</a>
+                <a href="buy.html" class="active" aria-current="page">BUY</a>
+                <a href="sell.html">SELL</a>
+                <a href="test-runner.html">AUDIT & TESTS</a>
+            </nav>
+            <div class="nav-actions">
+                <span class="eco-credits-pill" id="navEcoCredits" aria-label="Student EcoCredits Balance">🌱 0 EcoCredits</span>
+                <button class="nav-cart-btn" id="navCartBtn" aria-label="View Campus Cart">
+                    🛒 Cart
+                    <span class="cart-badge" id="navCartBadge" style="display: none;">0</span>
+                </button>
+                <button class="btn btn-outline btn-sm" id="userAuthBtn" aria-label="Campus Portal Sign In">Sign In / Register</button>
+                <button class="btn btn-sm" id="themeToggleBtn" aria-label="Toggle Color Theme" style="background: transparent; color: #fff; font-size: 1.1rem; padding: 0.3rem 0.5rem;">🌙</button>
+            </div>
         </div>
-        
-        <div class="products-grid" id="productsContainer">
-            <!-- Products will be loaded here by JavaScript -->
+    </header>
+
+    <div class="marketplace-header">
+        <h1>Campus Plastic & Filament Marketplace</h1>
+        <p>Procure sorted, verified recyclable plastics and engineering 3D filament scraps from dormitories, campus dining, and laboratory workshops.</p>
+    </div>
+
+    <main id="main-content" class="marketplace-main" role="main">
+        <!-- Search and Filter Bar -->
+        <section class="filter-search-bar" aria-label="Product Search and Filters">
+            <div class="search-input-wrap">
+                <label for="searchInput" class="sr-only" style="display: none;">Search campus inventory</label>
+                <input type="search" id="searchInput" class="form-control" placeholder="🔍 Search by name, plastic type, or campus zone..." aria-label="Search campus inventory">
+            </div>
+
+            <div class="filter-select">
+                <label for="plasticTypeFilter" class="sr-only" style="display: none;">Filter by Plastic Type</label>
+                <select id="plasticTypeFilter" class="form-control" aria-label="Filter by plastic type">
+                    <option value="all">All Plastic Types</option>
+                    <option value="PET">PET (Bottles & Beverage Containers)</option>
+                    <option value="HDPE">HDPE (Lab Jugs & Detergent Bottles)</option>
+                    <option value="PLA_3D">PLA/PETG (3D Printer Scraps & Filaments)</option>
+                    <option value="PP">PP (Food Court Trays & Meal Boxes)</option>
+                    <option value="LDPE">LDPE (Parcel Wraps & Film Scrap)</option>
+                    <option value="PVC">PVC (Engineering Piping Scraps)</option>
+                    <option value="PS">PS (Packaging Foam Cushions)</option>
+                </select>
+            </div>
+
+            <div class="filter-select">
+                <label for="campusZoneFilter" class="sr-only" style="display: none;">Filter by Campus Zone</label>
+                <select id="campusZoneFilter" class="form-control" aria-label="Filter by campus zone">
+                    <option value="all">All Campus Zones</option>
+                    <option value="student_union">Student Union & Cafeteria</option>
+                    <option value="makerspace_lab">Engineering Makerspace & 3D Lab</option>
+                    <option value="science_complex">Biotech & Science Complex</option>
+                    <option value="north_dorms">North Dormitories (Hall 1 & 2)</option>
+                    <option value="library">Central University Library</option>
+                </select>
+            </div>
+
+            <div class="filter-select">
+                <label for="sortFilter" class="sr-only" style="display: none;">Sort Inventory</label>
+                <select id="sortFilter" class="form-control" aria-label="Sort inventory">
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="quantity-desc">Stock: High to Low</option>
+                    <option value="credits-desc">EcoCredits: High to Low</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Product Cards Grid -->
+        <section class="products-grid" id="productsContainer" aria-label="Available Campus Plastics">
+            <!-- Dynamically populated safely by BuyPageController in js/buy.js -->
+        </section>
+    </main>
+
+    <!-- Authentication Modal (OWASP A01, A02, A07) -->
+    <div id="authModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="authModalTitle">Campus Portal Sign In</h3>
+                <button type="button" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+            </div>
+            <form id="authForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="authEmail">Campus Email</label>
+                    <input class="form-control" type="email" id="authEmail" placeholder="student@campus.edu" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="authPassword">Password</label>
+                    <input class="form-control" type="password" id="authPassword" placeholder="••••••••" required autocomplete="current-password">
+                    <div class="form-hint">Must contain min 8 chars, uppercase, lowercase, number & special char.</div>
+                </div>
+                <div id="authStudentFields" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label" for="authName">Full Name</label>
+                        <input class="form-control" type="text" id="authName" placeholder="Kavya Thukral">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="authStudentId">Student / Roll ID</label>
+                        <input class="form-control" type="text" id="authStudentId" placeholder="STU-2026-99">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="authRole">Campus Role</label>
+                        <select class="form-control" id="authRole">
+                            <option value="student">Student (50kg order quota)</option>
+                            <option value="faculty_staff">Faculty / Staff (150kg quota)</option>
+                            <option value="campus_recycler">Certified Campus Recycler (1000kg quota)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="authHostel">Hostel / Residence Hall</label>
+                        <select class="form-control" id="authHostel">
+                            <option value="dorm_newton">Newton Hall of Residence</option>
+                            <option value="dorm_curie">Curie Science Hostel</option>
+                            <option value="dorm_aryabhata">Aryabhata Engineering Block</option>
+                            <option value="club_warriors">Green Warriors Student Club</option>
+                            <option value="dorm_tagore">Tagore Arts & Humanities Dorm</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" id="authSubmitBtn" class="btn btn-primary btn-block">Sign In</button>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="#" id="authToggleModeBtn" style="color: var(--primary); font-size: 0.88rem; font-weight: 600;">
+                        New student or club? Register
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- Cart Button -->
-    <button class="cart-btn" id="cartBtn">
-        🛒
-        <span class="cart-count" id="cartCount">0</span>
-    </button>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Your Cart</h2>
-            <div id="cartItems">
-                <!-- Cart items will be loaded here -->
+    <!-- Campus Cart Modal -->
+    <div id="cartModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="cartModalTitle">Campus Order Cart</h3>
+                <button type="button" class="modal-close-btn" aria-label="Close dialog">&times;</button>
             </div>
-            <div class="cart-summary">
-                <p>Total Quantity: <span id="totalQuantity">0</span> kg</p>
-                <p>Total Price: ₹<span id="totalPrice">0</span></p>
-                <button id="checkoutBtn" class="checkout-btn">Proceed to Checkout</button>
+            <div id="cartItemsList" class="cart-items-list"></div>
+            <div class="cart-order-summary">
+                <div class="summary-row">
+                    <span>Total Weight:</span>
+                    <span style="font-weight: 700;"><span id="cartTotalKg">0</span> kg</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total Price:</span>
+                    <span>₹<span id="cartTotalPrice">0</span></span>
+                </div>
+                <button type="button" id="checkoutBtn" class="btn btn-primary btn-block" style="margin-top: 1rem;">
+                    Confirm Campus Order
+                </button>
             </div>
         </div>
     </div>
 
-    <script>
-        // Sample data for plastic waste products
-        const products = [
-            {
-                id: 1,
-                type: 'PET',
-                name: 'Clear PET Bottles',
-                description: 'Clean, sorted PET bottles ready for recycling',
-                price: 15,
-                quantity: 500,
-                location: 'Mumbai',
-                image: 'images/pet.jpg'
-            },
-            {
-                id: 2,
-                type: 'HDPE',
-                name: 'HDPE Containers',
-                description: 'Mixed color HDPE containers, cleaned and baled',
-                price: 12,
-                quantity: 300,
-                location: 'Delhi',
-                image: 'images/hdpe2.png'
-            },
-            {
-                id: 3,
-                type: 'PP',
-                name: 'Polypropylene Bags',
-                description: 'Used PP bags in good condition for recycling',
-                price: 10,
-                quantity: 800,
-                location: 'Bangalore',
-                image: 'images/pp.png'
-            },
-            {
-                id: 4,
-                type: 'LDPE',
-                name: 'LDPE Film Scrap',
-                description: 'Clean LDPE film scrap from packaging',
-                price: 8,
-                quantity: 400,
-                location: 'Chennai',
-                image: 'images/ldpe.png'
-            },
-            {
-                id: 5,
-                type: 'PS',
-                name: 'Polystyrene Packaging',
-                description: 'PS foam packaging material for recycling',
-                price: 7,
-                quantity: 200,
-                location: 'Hyderabad',
-                image: 'images/ps.png'
-            },
-            {
-                id: 6,
-                type: 'PVC',
-                name: 'PVC Pipes Scrap',
-                description: 'Clean PVC pipe cuttings, sorted by color',
-                price: 9,
-                quantity: 350,
-                location: 'Pune',
-                image: 'images/pvc.png'
-            }
-        ];
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-        // Cart data
-        let cart = [];
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>EcoVision</h4>
+                <p>Smart Campus Circular Plastic Economy & Student Life Sustainability Hub. Built for PromptWars x OWASP 2026.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Campus Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Campus Impact Dashboard</a></li>
+                    <li><a href="buy.html">Marketplace & 3D Filaments</a></li>
+                    <li><a href="sell.html">Student Drop-Off Portal</a></li>
+                    <li><a href="test-runner.html">Automated Tests & OWASP Audit</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Security & Standards</h4>
+                <ul>
+                    <li><span class="footer-security-pill">🛡️ Security controls included</span></li>
+                    <li><span class="footer-security-pill" style="margin-top: 0.5rem;">♿ Keyboard and screen reader support</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 EcoVision • Smart Campus & Student Life • PromptWars x OWASP</div>
+            <div>Public Repository: <a href="https://github.com/kavvz20/EcoVision" style="color: #86efac; text-decoration: underline;">kavvz20/EcoVision</a></div>
+        </div>
+    </footer>
 
-        // DOM Elements
-        const productsContainer = document.getElementById('productsContainer');
-        const plasticTypeFilter = document.getElementById('plasticTypeFilter');
-        const locationFilter = document.getElementById('locationFilter');
-        const sortFilter = document.getElementById('sortFilter');
-        const cartBtn = document.getElementById('cartBtn');
-        const cartCount = document.getElementById('cartCount');
-        const cartModal = document.getElementById('cartModal');
-        const closeModal = document.querySelector('.close');
-        const cartItems = document.getElementById('cartItems');
-        const totalQuantity = document.getElementById('totalQuantity');
-        const totalPrice = document.getElementById('totalPrice');
-        const checkoutBtn = document.getElementById('checkoutBtn');
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
-            renderProducts(products);
-            
-            // Check for cart in localStorage
-            if(localStorage.getItem('cart')) {
-                cart = JSON.parse(localStorage.getItem('cart'));
-                updateCartCount();
-            }
-        });
-
-        // Event Listeners
-        plasticTypeFilter.addEventListener('change', filterProducts);
-        locationFilter.addEventListener('change', filterProducts);
-        sortFilter.addEventListener('change', filterProducts);
-
-        cartBtn.addEventListener('click', () => {
-            if(cart.length === 0) {
-                alert('Your cart is empty');
-                return;
-            }
-            renderCart();
-            cartModal.classList.add('active');
-        });
-
-        closeModal.addEventListener('click', () => {
-            cartModal.classList.remove('active');
-        });
-
-        checkoutBtn.addEventListener('click', () => {
-            if(cart.length === 0) {
-                alert('Your cart is empty');
-                return;
-            }
-            
-            // In a real app, this would process payment
-            alert(`Order placed successfully!\nTotal: ₹${calculateTotalPrice()}\nThank you for your purchase!`);
-            
-            // Clear cart
-            cart = [];
-            localStorage.removeItem('cart');
-            updateCartCount();
-            cartModal.classList.remove('active');
-            renderProducts(products);
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if(e.target === cartModal) {
-                cartModal.classList.remove('active');
-            }
-        });
-
-        // Functions
-        function renderProducts(productsToRender) {
-            productsContainer.innerHTML = '';
-            
-            if(productsToRender.length === 0) {
-                productsContainer.innerHTML = '<p class="no-products">No products found matching your criteria.</p>';
-                return;
-            }
-            
-            productsToRender.forEach(product => {
-                const productEl = document.createElement('div');
-                productEl.className = 'product-card';
-                productEl.innerHTML = `
-                    <div class="product-image" style="background-image: url('${product.image}')"></div>
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <p><strong>Type:</strong> ${product.type}</p>
-                        <p><strong>Location:</strong> ${product.location}</p>
-                        <p><strong>Available:</strong> ${product.quantity}kg</p>
-                        <p class="product-price">₹${product.price}/kg</p>
-                        <div class="product-actions">
-                            <div class="quantity-control">
-                                <button class="decrement" data-id="${product.id}">-</button>
-                                <input type="number" class="quantity" value="1" min="1" max="${product.quantity}" data-id="${product.id}">
-                                <button class="increment" data-id="${product.id}">+</button>
-                            </div>
-                            <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-                        </div>
-                    </div>
-                `;
-                productsContainer.appendChild(productEl);
-            });
-            
-            // Add event listeners to the new buttons
-            document.querySelectorAll('.add-to-cart').forEach(btn => {
-                btn.addEventListener('click', addToCart);
-            });
-            
-            document.querySelectorAll('.increment').forEach(btn => {
-                btn.addEventListener('click', incrementQuantity);
-            });
-            
-            document.querySelectorAll('.decrement').forEach(btn => {
-                btn.addEventListener('click', decrementQuantity);
-            });
-            
-            document.querySelectorAll('.quantity').forEach(input => {
-                input.addEventListener('change', updateQuantity);
-            });
-        }
-
-        function filterProducts() {
-            const type = plasticTypeFilter.value;
-            const location = locationFilter.value;
-            const sort = sortFilter.value;
-            
-            let filteredProducts = [...products];
-            
-            // Filter by type
-            if(type !== 'all') {
-                filteredProducts = filteredProducts.filter(p => p.type === type);
-            }
-            
-            // Filter by location
-            if(location !== 'all') {
-                filteredProducts = filteredProducts.filter(p => p.location === location);
-            }
-            
-            // Sort products
-            if(sort === 'price-asc') {
-                filteredProducts.sort((a, b) => a.price - b.price);
-            } else if(sort === 'price-desc') {
-                filteredProducts.sort((a, b) => b.price - a.price);
-            } else if(sort === 'quantity-desc') {
-                filteredProducts.sort((a, b) => b.quantity - a.quantity);
-            }
-            
-            renderProducts(filteredProducts);
-        }
-
-        function addToCart(e) {
-            const productId = parseInt(e.target.getAttribute('data-id'));
-            const product = products.find(p => p.id === productId);
-            const quantityInput = e.target.parentElement.querySelector('.quantity');
-            const quantity = parseInt(quantityInput.value);
-            
-            if(quantity > product.quantity) {
-                alert(`Only ${product.quantity}kg available`);
-                return;
-            }
-            
-            // Check if already in cart
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if(existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    quantity: quantity,
-                    type: product.type
-                });
-            }
-            
-            // Update localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Update UI
-            updateCartCount();
-            alert(`${quantity}kg of ${product.name} added to cart!`);
-        }
-
-        function renderCart() {
-            cartItems.innerHTML = '';
-            
-            if(cart.length === 0) {
-                cartItems.innerHTML = '<p>Your cart is empty</p>';
-                return;
-            }
-            
-            cart.forEach(item => {
-                const cartItemEl = document.createElement('div');
-                cartItemEl.className = 'cart-item';
-                cartItemEl.innerHTML = `
-                    <div class="cart-item-info">
-                        <h4>${item.name} (${item.type})</h4>
-                        <p>₹${item.price}/kg × ${item.quantity}kg = ₹${item.price * item.quantity}</p>
-                    </div>
-                    <div class="cart-item-actions">
-                        <button class="remove-item" data-id="${item.id}">Remove</button>
-                    </div>
-                `;
-                cartItems.appendChild(cartItemEl);
-            });
-            
-            // Add event listeners to remove buttons
-            document.querySelectorAll('.remove-item').forEach(btn => {
-                btn.addEventListener('click', removeFromCart);
-            });
-            
-            // Update totals
-            updateCartTotals();
-        }
-
-        function removeFromCart(e) {
-            const productId = parseInt(e.target.getAttribute('data-id'));
-            const itemIndex = cart.findIndex(item => item.id === productId);
-            
-            if(itemIndex !== -1) {
-                cart.splice(itemIndex, 1);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                renderCart();
-                updateCartCount();
-            }
-        }
-
-        function updateCartCount() {
-            const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
-            cartCount.textContent = itemCount;
-        }
-
-        function updateCartTotals() {
-            const totalKg = cart.reduce((total, item) => total + item.quantity, 0);
-            const total = calculateTotalPrice();
-            
-            totalQuantity.textContent = totalKg;
-            totalPrice.textContent = total;
-        }
-
-        function calculateTotalPrice() {
-            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-        }
-
-        function incrementQuantity(e) {
-            const productId = parseInt(e.target.getAttribute('data-id'));
-            const quantityInput = e.target.parentElement.querySelector('.quantity');
-            const max = parseInt(quantityInput.getAttribute('max'));
-            
-            let newValue = parseInt(quantityInput.value) + 1;
-            if(newValue > max) newValue = max;
-            quantityInput.value = newValue;
-        }
-
-        function decrementQuantity(e) {
-            const quantityInput = e.target.parentElement.querySelector('.quantity');
-            let newValue = parseInt(quantityInput.value) - 1;
-            if(newValue < 1) newValue = 1;
-            quantityInput.value = newValue;
-        }
-
-        function updateQuantity(e) {
-            const max = parseInt(e.target.getAttribute('max'));
-            let value = parseInt(e.target.value);
-            
-            if(isNaN(value) || value < 1) {
-                e.target.value = 1;
-            } else if(value > max) {
-                e.target.value = max;
-            }
-        }
-    </script>
+    <!-- Scripts -->
+    <script type="module" src="js/security.js"></script>
+    <script type="module" src="js/state.js"></script>
+    <script type="module" src="js/campus.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/buy.js"></script>
 </body>
 </html>

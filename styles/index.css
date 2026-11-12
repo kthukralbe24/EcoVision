@@ -1,98 +1,345 @@
-/* Body Styling */
-body {
-    background-color: #7fb282;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+/* ==========================================================================
+   EcoVision - Index & Campus Dashboard Styles
+   ========================================================================== */
+
+.hero-campus-section {
+    background: linear-gradient(135deg, #1e5a22 0%, #2e7d32 100%);
+    padding: 3rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Navbar Styling */
-nav {
-    background-color: #7fb282;
-    padding: 15px;
-    text-align: right;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    margin: 0 15px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: #162e10;
-    text-decoration: underline;
-}
-
-/* Main White Section */
-.white {
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 450px;
-    background-color: white;
-    margin-left: 90px;
-    width: 80%;
-    border-radius: 30px;
-    box-shadow: 5px 10px 5px rgb(39, 39, 39);
-    padding: 40px;
+    padding: 3rem;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-text-content {
+    flex: 1;
+    max-width: 620px;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(46, 125, 50, 0.2);
+}
+
+.hero-title {
+    color: var(--primary);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-tagline {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.55;
+}
+
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-hero-buy {
+    background-color: var(--primary);
+    color: #ffffff;
+    font-size: 1.1rem;
+    padding: 0.85rem 2rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 14px rgba(27, 94, 32, 0.35);
+}
+
+.btn-hero-buy:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.btn-hero-sell {
+    background-color: var(--eco-gold-bg);
+    color: #854d0e;
+    border: 2px solid #fde047;
+    font-size: 1.1rem;
+    padding: 0.85rem 2rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+}
+
+.btn-hero-sell:hover {
+    background-color: #fef08a;
+    transform: translateY(-2px);
+}
+
+.btn-hero-audit {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+    padding: 0.85rem 1.25rem;
+}
+
+.hero-media-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
 }
 
-/* Left Side: Text */
-.text-section {
-    width: 50%;
-}
-
-h1 {
-    color: rgb(45, 82, 48);
-    font-size: 50px;
-    margin-bottom: 20px;
-}
-
-/* Buttons */
-.button-container {
-    margin-bottom: 50px;
-    z-index: 100;
-}
-
-.btn {
-    background-color: #18391e;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin: 10px;
-    transition: 0.3s;
-    
-}
-
-.btn:hover {
-    background-color: #87daa1;
-}
-
-/* Right Side: Image */
-.right-image {
-    width: 50%;
-}
-
-.right-image img {
+.hero-img {
     width: 100%;
+    max-width: 460px;
     height: auto;
-    border-radius: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    object-fit: cover;
+    border: 4px solid #ffffff;
 }
 
-/* Bottom Left Image */
-.image {
+/* Floating Corner Image */
+.hero-corner-decor {
     position: absolute;
-    bottom: -40px;
-    
-    width: 320px;
-    
-    z-index: 2;
-} 
+    bottom: -20px;
+    left: 20px;
+    width: 180px;
+    height: auto;
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Campus Impact Metrics Bar */
+.metrics-strip {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 1.5rem;
+}
+
+.metrics-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.metric-card {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: var(--transition);
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.metric-icon-wrap {
+    width: 54px;
+    height: 54px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+.metric-value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.1;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Smart Campus Features Grid */
+.campus-features-section {
+    max-width: 1200px;
+    margin: 3.5rem auto;
+    padding: 0 1.5rem;
+}
+
+.section-heading-wrap {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+}
+
+.section-tag {
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+}
+
+.section-desc {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.75rem;
+}
+
+.feature-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.feature-icon {
+    font-size: 2rem;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 1.25rem;
+    flex: 1;
+}
+
+/* Inter-Hostel Leaderboard */
+.leaderboard-section {
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 1.5rem;
+}
+
+.leaderboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-main);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.leaderboard-table th {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.leaderboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.leaderboard-table tr:last-child td {
+    border-bottom: none;
+}
+
+.rank-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+.rank-1 { background-color: #ffd700; color: #854d0e; }
+.rank-2 { background-color: #e2e8f0; color: #334155; }
+.rank-3 { background-color: #fed7aa; color: #9a3412; }
+.rank-other { background-color: transparent; color: var(--text-muted); }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero-container {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        text-align: center;
+    }
+    .hero-cta-group {
+        justify-content: center;
+    }
+    .hero-corner-decor {
+        display: none;
+    }
+}

@@ -3,209 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plastic Wallah - Sell Plastic</title>
+    <meta name="theme-color" content="#1e5a22">
+    <link rel="manifest" href="manifest.webmanifest">
+    <!-- Strict Content Security Policy (OWASP A05) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; connect-src 'self'; object-src 'none'; base-uri 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="description" content="List campus recyclable plastic waste or 3D printer scraps for student collection. Earn verified EcoCredits and contribute to your hostel's green championship standing.">
+    <title>EcoVision - Student Drop-Off & Plastic Listing Portal</title>
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/sell.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Navbar -->
-    <nav>
-        <a href="index.html">HOME</a>
-        <a href="buy.html">BUY</a>
-        <a href="sell.html">SELL</a>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="white-container">
-        <h1>SELL PLASTIC WASTE</h1>
-        
-        <form id="sellForm" class="sell-form">
-            <!-- Left Column -->
-            <div class="form-group">
-                <label for="plasticType">Plastic Type</label>
-                <select id="plasticType" required>
-                    <option value="">Select type</option>
-                    <option value="PET">PET (Polyethylene Terephthalate)</option>
-                    <option value="HDPE">HDPE (High-Density Polyethylene)</option>
-                    <option value="PVC">PVC (Polyvinyl Chloride)</option>
-                    <option value="LDPE">LDPE (Low-Density Polyethylene)</option>
-                    <option value="PP">PP (Polypropylene)</option>
-                    <option value="PS">PS (Polystyrene)</option>
-                    <option value="OTHER">Other</option>
-                </select>
+    <!-- Navigation Header -->
+    <header class="site-nav" role="banner">
+        <div class="nav-container">
+            <a href="index.html" class="brand-wrapper" aria-label="EcoVision Home">
+                <img src="images/plas.png" alt="EcoVision Logo" class="brand-logo-img">
+                <div class="brand-title">
+                    EcoVision
+                    <span class="brand-subtitle">Smart Campus Sustainability</span>
+                </div>
+            </a>
+            <nav class="nav-links" role="navigation" aria-label="Main Navigation">
+                <a href="index.html">HOME</a>
+                <a href="buy.html">BUY</a>
+                <a href="sell.html" class="active" aria-current="page">SELL</a>
+                <a href="test-runner.html">AUDIT & TESTS</a>
+            </nav>
+            <div class="nav-actions">
+                <span class="eco-credits-pill" id="navEcoCredits" aria-label="Student EcoCredits Balance">🌱 0 EcoCredits</span>
+                <button class="nav-cart-btn" id="navCartBtn" aria-label="View Campus Cart">
+                    🛒 Cart
+                    <span class="cart-badge" id="navCartBadge" style="display: none;">0</span>
+                </button>
+                <button class="btn btn-outline btn-sm" id="userAuthBtn" aria-label="Campus Portal Sign In">Sign In / Register</button>
+                <button class="btn btn-sm" id="themeToggleBtn" aria-label="Toggle Color Theme" style="background: transparent; color: #fff; font-size: 1.1rem; padding: 0.3rem 0.5rem;">🌙</button>
             </div>
-            
-            <div class="form-group">
-                <label for="quantity">Quantity (kg)</label>
-                <input type="number" id="quantity" min="1" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="price">Price per kg (₹)</label>
-                <input type="number" id="price" min="1" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="location">Your Location</label>
-                <select id="location" required>
-                    <option value="">Select location</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Mumbai">Mumbai</option>
-                    <option value="Bangalore">Bangalore</option>
-                    <option value="Chennai">Chennai</option>
-                    <option value="Hyderabad">Hyderabad</option>
-                    <option value="Pune">Pune</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            
-            <!-- Right Column -->
-            <div class="form-group">
-                <label for="contactName">Contact Name</label>
-                <input type="text" id="contactName" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="contactPhone">Contact Phone</label>
-                <input type="tel" id="contactPhone" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="contactEmail">Contact Email</label>
-                <input type="email" id="contactEmail">
-            </div>
-            
-            <!-- Image Upload (now at the bottom) -->
-            <div class="image-upload" id="imageUpload">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click to upload image of your plastic waste</p>
-                <img id="imagePreview" alt="Preview">
-            </div>
-            <input type="file" id="plasticImage" accept="image/*" style="display: none;">
-            
-            <!-- Submit Button -->
-            <div class="form-group full-width">
-                <button type="submit" class="btn">LIST MY PLASTIC WASTE</button>
-            </div>
-        </form>
-        
-        <div id="successMessage" class="success-message">
-            <i class="fas fa-check-circle" style="font-size: 24px; margin-bottom: 10px;"></i>
-            <h3>Your plastic waste has been listed successfully!</h3>
-            <p>Buyers will now be able to see your listing and contact you.</p>
         </div>
-        
-        <div class="preview-section">
-            <h2>Your Listing Preview</h2>
-            <div class="preview-card" id="listingPreview">
-                <div class="preview-image" id="previewImage"></div>
-                <h3 id="previewTitle">Your Plastic Type</h3>
-                <p><strong>Quantity:</strong> <span id="previewQuantity">0</span> kg</p>
-                <p><strong>Price:</strong> ₹<span id="previewPrice">0</span> per kg</p>
-                <p><strong>Location:</strong> <span id="previewLocation">Not specified</span></p>
-                <p><strong>Contact:</strong> <span id="previewContact">Not specified</span></p>
+    </header>
+
+    <div class="sell-page-header">
+        <h1>List Campus Recyclables & Earn Points</h1>
+        <p>Drop off sorted dorm plastics or makerspace 3D scrap, earn student EcoCredits, and lead your hostel to victory in the Green League.</p>
+    </div>
+
+    <main id="main-content" class="sell-layout-container" role="main">
+        <!-- Left: Form -->
+        <section class="sell-form-card" aria-labelledby="formHeading">
+            <h2 id="formHeading" style="font-size: 1.45rem; font-weight: 800; color: var(--primary); margin-bottom: 1.25rem;">
+                Schedule Drop-Off / Create Listing
+            </h2>
+
+            <div id="successCard" class="success-card" role="alert">
+                <h3>✓ Listing Published Successfully!</h3>
+                <p>Your listing is now visible on the campus marketplace. EcoCredits have been awarded and your hostel score updated!</p>
+                <div style="margin-top: 1rem;">
+                    <a href="buy.html" class="btn btn-primary btn-sm">View in Marketplace &rarr;</a>
+                </div>
+            </div>
+
+            <form id="sellForm" novalidate>
+                <div class="form-grid-2col">
+                    <div class="form-group">
+                        <label class="form-label" for="plasticType">Plastic Type *</label>
+                        <select id="plasticType" class="form-control" required>
+                            <option value="PET">PET (Bottles & Beverage Containers)</option>
+                            <option value="HDPE">HDPE (Lab Jugs & Detergent Bottles)</option>
+                            <option value="PLA_3D">PLA/PETG (3D Printer Scraps & Filaments)</option>
+                            <option value="PP">PP (Food Court Trays & Meal Boxes)</option>
+                            <option value="LDPE">LDPE (Parcel Bubble Wrap & Films)</option>
+                            <option value="PVC">PVC (Engineering Workshop Offcuts)</option>
+                            <option value="PS">PS (Packaging Foam Blocks)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="campusZone">Campus Drop-off Hub *</label>
+                        <select id="campusZone" class="form-control" required>
+                            <option value="north_dorms">North Dormitories (Hall 1 & 2)</option>
+                            <option value="south_dorms">South Residences (Hall 3 & 4)</option>
+                            <option value="student_union">Student Union & Cafeteria</option>
+                            <option value="makerspace_lab">Engineering Makerspace & 3D Lab</option>
+                            <option value="science_complex">Biotech & Science Complex</option>
+                            <option value="library">Central University Library</option>
+                            <option value="sports_arena">Campus Sports Arena</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2col">
+                    <div class="form-group">
+                        <label class="form-label" for="quantity">Quantity (kg) *</label>
+                        <input type="number" id="quantity" class="form-control" min="1" max="500" value="10" required>
+                        <div class="form-hint">Max 500kg per individual campus drop-off.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="price">Price per kg (₹) *</label>
+                        <input type="number" id="price" class="form-control" min="1" max="200" value="15" required>
+                        <div class="form-hint">Recommended: ₹8 - ₹25/kg depending on polymer type.</div>
+                    </div>
+                </div>
+
+                <div class="form-grid-2col">
+                    <div class="form-group">
+                        <label class="form-label" for="contactName">Student / Contributor Name *</label>
+                        <input type="text" id="contactName" class="form-control" placeholder="Kavya Thukral" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="studentId">Student Roll No / Campus ID *</label>
+                        <input type="text" id="studentId" class="form-control" placeholder="STU-2026-99" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2col">
+                    <div class="form-group">
+                        <label class="form-label" for="contactPhone">Contact Phone *</label>
+                        <input type="tel" id="contactPhone" class="form-control" placeholder="+91 9876543210" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contactEmail">Campus Email</label>
+                        <input type="email" id="contactEmail" class="form-control" placeholder="student@campus.edu">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="hostelSelect">Hostel / Residence League Affiliation</label>
+                    <select id="hostelSelect" class="form-control">
+                        <option value="dorm_newton">Newton Hall of Residence</option>
+                        <option value="dorm_curie">Curie Science Hostel</option>
+                        <option value="dorm_aryabhata">Aryabhata Engineering Block</option>
+                        <option value="club_warriors">Green Warriors Student Club</option>
+                        <option value="dorm_tagore">Tagore Arts & Humanities Dorm</option>
+                    </select>
+                    <div class="form-hint">Points from this drop-off will be credited to this dormitory.</div>
+                </div>
+
+                <!-- Secure Image Upload (OWASP File Upload Security) -->
+                <div class="form-group">
+                    <label class="form-label">Material Photo Verification</label>
+                    <div class="image-dropzone" id="imageDropzone" role="button" tabindex="0" aria-label="Upload plastic waste photo">
+                        <div id="dropzoneContent">
+                            <div class="dropzone-icon" aria-hidden="true">📷</div>
+                            <div class="dropzone-text">Click or drag & drop photo of your plastic batch</div>
+                            <div class="dropzone-hint">Permitted: JPG, PNG, WebP (Max 3MB) • Client-side MIME validated</div>
+                        </div>
+                        <img id="dropzonePreview" class="dropzone-preview-img" alt="Uploaded material preview">
+                    </div>
+                    <input type="file" id="plasticImage" accept="image/jpeg,image/png,image/webp" style="display: none;">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" style="font-size: 1.05rem; padding: 0.85rem;">
+                    🚀 Publish Campus Listing & Earn EcoCredits
+                </button>
+            </form>
+        </section>
+
+        <!-- Right: Sticky Live Preview Panel -->
+        <aside class="preview-sticky-panel" aria-label="Live Listing Preview">
+            <div class="preview-container-card">
+                <div class="preview-banner-header">
+                    <span>LIVE CAMPUS PREVIEW</span>
+                    <span class="badge" id="prevTypeBadge" style="background: rgba(255,255,255,0.25); color: #fff;">PET</span>
+                </div>
+                <div class="preview-media-box">
+                    <img id="previewCardImg" src="images/pet.jpg" alt="Preview Image">
+                </div>
+                <div class="preview-content">
+                    <span id="prevZone" class="product-zone-tag">📍 North Dormitories (Hall 1 & 2)</span>
+                    <h3 id="prevTitle" style="font-size: 1.15rem; font-weight: 700; margin: 0.35rem 0;">Polyethylene Terephthalate Waste</h3>
+
+                    <div style="display: flex; justify-content: space-between; margin: 0.75rem 0; font-size: 0.95rem;">
+                        <span>Quantity: <strong id="prevQty">10 kg</strong></span>
+                        <span>Price: <strong id="prevPrice" style="color: var(--primary);">₹15/kg</strong></span>
+                    </div>
+
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                        Seller: <span id="prevSeller">Campus Student (STU-ID)</span>
+                    </div>
+
+                    <div class="preview-reward-calc">
+                        <span style="font-size: 0.85rem; font-weight: 600; color: #854d0e;">Estimated Student Reward:</span>
+                        <span id="prevCredits" class="reward-calc-value">+300 EcoCredits</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Authentication Modal (OWASP A01, A02, A07) -->
+    <div id="authModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="authModalTitle">Campus Portal Sign In</h3>
+                <button type="button" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+            </div>
+            <form id="authForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="authEmail">Campus Email</label>
+                    <input class="form-control" type="email" id="authEmail" placeholder="student@campus.edu" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="authPassword">Password</label>
+                    <input class="form-control" type="password" id="authPassword" placeholder="••••••••" required autocomplete="current-password">
+                    <div class="form-hint">Must contain min 8 chars, uppercase, lowercase, number & special char.</div>
+                </div>
+                <div id="authStudentFields" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label" for="authName">Full Name</label>
+                        <input class="form-control" type="text" id="authName" placeholder="Kavya Thukral">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="authStudentId">Student / Roll ID</label>
+                        <input class="form-control" type="text" id="authStudentId" placeholder="STU-2026-99">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="authRole">Campus Role</label>
+                        <select class="form-control" id="authRole">
+                            <option value="student">Student (50kg order quota)</option>
+                            <option value="faculty_staff">Faculty / Staff (150kg quota)</option>
+                            <option value="campus_recycler">Certified Campus Recycler (1000kg quota)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="authHostel">Hostel / Residence Hall</label>
+                        <select class="form-control" id="authHostel">
+                            <option value="dorm_newton">Newton Hall of Residence</option>
+                            <option value="dorm_curie">Curie Science Hostel</option>
+                            <option value="dorm_aryabhata">Aryabhata Engineering Block</option>
+                            <option value="club_warriors">Green Warriors Student Club</option>
+                            <option value="dorm_tagore">Tagore Arts & Humanities Dorm</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" id="authSubmitBtn" class="btn btn-primary btn-block">Sign In</button>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="#" id="authToggleModeBtn" style="color: var(--primary); font-size: 0.88rem; font-weight: 600;">
+                        New student or club? Register
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Campus Cart Modal -->
+    <div id="cartModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="cartModalTitle">Campus Order Cart</h3>
+                <button type="button" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+            </div>
+            <div id="cartItemsList" class="cart-items-list"></div>
+            <div class="cart-order-summary">
+                <div class="summary-row">
+                    <span>Total Weight:</span>
+                    <span style="font-weight: 700;"><span id="cartTotalKg">0</span> kg</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total Price:</span>
+                    <span>₹<span id="cartTotalPrice">0</span></span>
+                </div>
+                <button type="button" id="checkoutBtn" class="btn btn-primary btn-block" style="margin-top: 1rem;">
+                    Confirm Campus Order
+                </button>
             </div>
         </div>
     </div>
 
-    <script>
-        // DOM Elements
-        const sellForm = document.getElementById('sellForm');
-        const imageUpload = document.getElementById('imageUpload');
-        const plasticImage = document.getElementById('plasticImage');
-        const imagePreview = document.getElementById('imagePreview');
-        const previewImage = document.getElementById('previewImage');
-        const previewTitle = document.getElementById('previewTitle');
-        const previewQuantity = document.getElementById('previewQuantity');
-        const previewPrice = document.getElementById('previewPrice');
-        const previewLocation = document.getElementById('previewLocation');
-        const previewContact = document.getElementById('previewContact');
-        const successMessage = document.getElementById('successMessage');
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-        // Image Upload Handling
-        imageUpload.addEventListener('click', () => {
-            plasticImage.click();
-        });
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>EcoVision</h4>
+                <p>Smart Campus Circular Plastic Economy & Student Life Sustainability Hub. Built for PromptWars x OWASP 2026.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Campus Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Campus Impact Dashboard</a></li>
+                    <li><a href="buy.html">Marketplace & 3D Filaments</a></li>
+                    <li><a href="sell.html">Student Drop-Off Portal</a></li>
+                    <li><a href="test-runner.html">Automated Tests & OWASP Audit</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Security & Standards</h4>
+                <ul>
+                    <li><span class="footer-security-pill">🛡️ Security controls included</span></li>
+                    <li><span class="footer-security-pill" style="margin-top: 0.5rem;">♿ Keyboard and screen reader support</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 EcoVision • Smart Campus & Student Life • PromptWars x OWASP</div>
+            <div>Public Repository: <a href="https://github.com/kavvz20/EcoVision" style="color: #86efac; text-decoration: underline;">kavvz20/EcoVision</a></div>
+        </div>
+    </footer>
 
-        plasticImage.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    imagePreview.src = event.target.result;
-                    imagePreview.style.display = 'block';
-                    imageUpload.querySelector('i').style.display = 'none';
-                    imageUpload.querySelector('p').style.display = 'none';
-                    
-                    // Update preview
-                    previewImage.style.backgroundImage = `url('${event.target.result}')`;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Form Input Handling
-        const formInputs = document.querySelectorAll('#sellForm input, #sellForm select');
-        formInputs.forEach(input => {
-            input.addEventListener('input', updatePreview);
-        });
-
-        function updatePreview() {
-            // Update preview with form values
-            const plasticType = document.getElementById('plasticType').value || 'Your Plastic Type';
-            const quantity = document.getElementById('quantity').value || '0';
-            const price = document.getElementById('price').value || '0';
-            const location = document.getElementById('location').value || 'Not specified';
-            const contactName = document.getElementById('contactName').value || 'Not specified';
-            
-            previewTitle.textContent = plasticType;
-            previewQuantity.textContent = quantity;
-            previewPrice.textContent = price;
-            previewLocation.textContent = location;
-            previewContact.textContent = contactName;
-        }
-
-        // Form Submission
-        sellForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form
-            const plasticType = document.getElementById('plasticType').value;
-            const quantity = document.getElementById('quantity').value;
-            const price = document.getElementById('price').value;
-            const location = document.getElementById('location').value;
-            const contactName = document.getElementById('contactName').value;
-            const contactPhone = document.getElementById('contactPhone').value;
-            
-            if (!plasticType || !quantity || !price || !location || !contactName || !contactPhone) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // In a real app, this would send data to a server
-            // For now, we'll just show a success message
-            
-            // Show success message
-            successMessage.style.display = 'block';
-            
-            // Scroll to success message
-            successMessage.scrollIntoView({ behavior: 'smooth' });
-            
-            // Reset form after 3 seconds
-            setTimeout(() => {
-                sellForm.reset();
-                imagePreview.src = '';
-                imagePreview.style.display = 'none';
-                imageUpload.querySelector('i').style.display = 'block';
-                imageUpload.querySelector('p').style.display = 'block';
-                previewImage.style.backgroundImage = 'none';
-                updatePreview();
-            }, 3000);
-        });
-
-        // Initialize preview
-        updatePreview();
-    </script>
+    <!-- Scripts -->
+    <script type="module" src="js/security.js"></script>
+    <script type="module" src="js/state.js"></script>
+    <script type="module" src="js/campus.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/sell.js"></script>
 </body>
 </html>

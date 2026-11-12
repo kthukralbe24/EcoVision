@@ -1,0 +1,22 @@
+{
+  "name": "EcoVision - Smart Campus Circular Plastic Economy",
+  "short_name": "EcoVision",
+  "description": "Smart Campus Circular Plastic Economy & Student Life Sustainability Hub",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1e5a22",
+  "theme_color": "#1e5a22",
+  "icons": [
+    {
+      "src": "images/plas.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/plas.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
